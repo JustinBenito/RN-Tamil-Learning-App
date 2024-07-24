@@ -4,23 +4,11 @@ import {  StyleSheet } from 'react-native';
 import { NavigationContainer } from "@react-navigation/native";
 import { useFonts } from "expo-font";
 import SignUpIcon from "./screens/SignUpIcon";
-import PatientProfile from "./screens/PatientProfile";
-import DoctorsCalendar from "./screens/DoctorsCalendar";
-import DoctorsProfile from "./screens/DoctorsProfile";
-import DoctorsList from "./screens/DoctorsList";
-import DocCalendar from "./screens/DocCalendar";
-import DocHome from "./screens/DocHome";
-import PatientHome from "./screens/PatientHome";
-import DocLoginIcon from "./screens/DocLoginIcon";
+import CustomHeader from './components/Header';
+import SpeechAvatar from "./screens/Avatar";
+
 import LoginIcon from "./screens/LoginIcon";
-import DocSignupFormIcon from "./screens/DocSignupFormIcon";
-import DocSignUpIcon from "./screens/DocSignUpIcon";
-import Chats1 from "./components/Chats1";
-import Chats from "./components/Chats";
-import Contacts3 from "./components/Contacts3";
-import Contacts2 from "./components/Contacts2";
-import Contacts1 from "./components/Contacts1";
-import Contacts from "./components/Contacts";
+
 
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import {
@@ -31,82 +19,14 @@ import {
   SafeAreaView,
 } from "react-native";
 
-import { createBottomTabNavigator } from "@react-navigation/bottom-tabs";
 import DetailScreen from "./screens/DetailScreen";
-import HomeScreen from "./screens/PatientHome";
+import HomeScreen from "./screens/Tabs";
+import Splash from "./screens/Splash";
+import Home from "./screens/HomeScreen";
+import Words from "./screens/Words";
+import Syllables from "./screens/Syllables";
+import Speech from "./screens/Speech";
 
-const Tab = createBottomTabNavigator();
-function BottomTabsRoot({ navigation }) {
-  const [bottomTabItemsNormal] = React.useState([
-    <Chats />,
-    <Contacts2 />,
-    <Contacts />,
-  ]);
-  const [bottomTabItemsActive] = React.useState([
-    <Chats1 />,
-    <Contacts3 />,
-    <Contacts1 />,
-  ]);
-  return (
-    <Tab.Navigator
-      screenOptions={{ headerShown: false }}
-      tabBar={({ state, descriptors, navigation }) => {
-        const activeIndex = state.index;
-        return (
-          <SafeAreaView>
-            <View
-              style={{
-                alignSelf: "stretch",
-                backgroundColor: "#fff",
-                height: 69,
-                flexDirection: "row",
-                paddingHorizontal: 60,
-                paddingVertical: 15,
-                alignItems: "center",
-                justifyContent: "space-between",
-              }}
-            >
-              {bottomTabItemsNormal.map((item, index) => {
-                const isFocused = state.index === index;
-                return (
-                  <Pressable
-                    key={index}
-                    onPress={() => {
-                      navigation.navigate({
-                        name: state.routes[index].name,
-                        merge: true,
-                      });
-                    }}
-                  >
-                    {activeIndex === index
-                      ? bottomTabItemsActive[index] || item
-                      : item}
-                  </Pressable>
-                );
-              })}
-            </View>
-          </SafeAreaView>
-        );
-      }}
-    >
-      <Tab.Screen
-        name="PatientHome"
-        component={HomeScreen}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="DoctorsList"
-        component={DoctorsList}
-        options={{ headerShown: false }}
-      />
-      <Tab.Screen
-        name="PatientProfile"
-        component={PatientProfile}
-        options={{ headerShown: false }}
-      />
-    </Tab.Navigator>
-  );
-}
 
 const App = () => {
   const [hideSplashScreen, setHideSplashScreen] = React.useState(true);
@@ -119,10 +39,11 @@ const App = () => {
     Montserrat_semibold: require("./assets/fonts/Montserrat_semibold.ttf"),
     Montserrat_bold_italic: require("./assets/fonts/Montserrat_bold_italic.ttf"),
     "Work Sans_regular": require("./assets/fonts/Work_Sans_regular.ttf"),
+    "Tamil": require("./assets/fonts/SunTommy-y-Tamil-Normal.ttf"),
   });
 
   if (!fontsLoaded && !error) {
-    return null;
+    console.log( "here too");
   }
 
   return (
@@ -130,16 +51,18 @@ const App = () => {
       <NavigationContainer>
         {hideSplashScreen ? (
           <Stack.Navigator
-            initialRouteName="HomeScreen"
+            initialRouteName="Splash"
             screenOptions={{ headerShown: false }}
           >
-            <Stack.Screen name="BottomTabsRoot" component={BottomTabsRoot} />
+            {/* <Stack.Screen name="BottomTabsRoot" component={BottomTabsRoot} /> */}
             <Stack.Screen
               name="SignUp"
               component={SignUpIcon}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
+            <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
+            <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
+            {/* <Stack.Screen
               name="DoctorsCalendar"
               component={DoctorsCalendar}
               options={{ headerShown: false }}
@@ -163,13 +86,13 @@ const App = () => {
               name="DocLogin"
               component={DocLoginIcon}
               options={{ headerShown: false }}
-            />
+            /> */}
             <Stack.Screen
               name="Login"
               component={LoginIcon}
               options={{ headerShown: false }}
             />
-            <Stack.Screen
+            {/* <Stack.Screen
               name="DocSignupForm"
               component={DocSignupFormIcon}
               options={{ headerShown: false }}
@@ -178,8 +101,28 @@ const App = () => {
               name="DocSignUp"
               component={DocSignUpIcon}
               options={{ headerShown: false }}
-            />
+            /> */}
              <Stack.Screen name="HomeScreen" component={HomeScreen} />
+             <Stack.Screen name="Speech" component={Speech} options={({ navigation }) => ({
+                headerShown: true,
+                header: () => <CustomHeader navigation={navigation} title="Training" />
+              })}/>
+             <Stack.Screen name="Words" component={Words} options={({ navigation }) => ({
+                headerShown: true,
+                header: () => <CustomHeader navigation={navigation} title="Words" />
+              })}/>
+             <Stack.Screen name="SpeechAvatar" component={SpeechAvatar} 
+             options={({ navigation }) => ({
+              headerShown: true,
+              header: () => <CustomHeader navigation={navigation} title="Training" />
+            })}/>
+
+              <Stack.Screen name="Syllables" component={Syllables} options={({ navigation }) => ({
+                headerShown: true,
+                header: () => <CustomHeader navigation={navigation} title="Syllables" />
+              })}/>
+             
+
             <Stack.Screen
               name="Details"
               component={DetailScreen}
