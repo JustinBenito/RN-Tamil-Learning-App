@@ -4,15 +4,19 @@ import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 const { width, height } = Dimensions.get('window');
 import { useNavigation } from '@react-navigation/native';
+import { getAuth, onAuthStateChanged } from "firebase/auth";
 
 export default function Home({ navigation }) {
+
+  const auth = getAuth();
+  const user = auth.currentUser;
 
   const navigations = useNavigation();
   return (
     <SafeAreaView style={styles.container}>
       <View style={styles.topContainer}>
         <View style={{ flex: 1, gap: 3, }} >
-        <Text style={styles.greeting}>Hi, Justin!</Text>
+        <Text style={styles.greeting}>Hi, {user.email.split('@')[0]}</Text>
         <Text style={styles.question}>What would you like to learn?</Text>
         </View>
         <Image source={require('../assets/Splashscreen.png')} style={styles.image} />

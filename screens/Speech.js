@@ -3,14 +3,19 @@ import { View, Text, TouchableOpacity, StyleSheet, Dimensions, Image, ScrollView
 
 import axios from 'axios';
 import { Audio } from 'expo-av';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import { SpeechConfig } from 'microsoft-cognitiveservices-speech-sdk';
+
 
 const { width, height } = Dimensions.get('window');
 
-const App = () => {
+const Speech = ({route}) => {
+  const [sentence, setSentence] = useState('');
   const [micPressed, setMicPressed] = useState(true);
 
+  useEffect(() => {
+    setSentence(route.params);
+  }, [route.params]);
 
   const visemeMap = {
     0: require('../assets/visemesgray/viseme_id_0.jpg'),
@@ -36,55 +41,46 @@ const App = () => {
     20: require('../assets/visemesgray/viseme_id_20.jpg'),
     21: require('../assets/visemesgray/viseme_id_21.jpg'),
   };
+  const [asrText, setAsrText] = useState('____');
 
-
+  useEffect(() => {
+    let sent='_'.repeat(route.params.length);
+setAsrText(sent);
+  }, [sentence]);
   
   const [imageIndex, setImageIndex] = useState(0);
 
-  const sentences = [
-    'அப்பா',
-    'அம்மா',
-    'பாப்பா',
-    'பால்',
-    'வீடு',
-    'புத்தகம்',
-    'குழந்தை',
-    'பூ',
-  ];
   
 
-  const [asrText, setAsrText] = useState('Vankam');
+
   const [visemeArr, setVisemeMap] = useState([]);
-  const [sentence, setSentence] = useState('');
+
   const [recording, setRecording] = useState(false);
   const [audioUri, setAudioUri] = useState(null);
   const recordingRef = useRef(null);
   const [token, setToken] = useState("0f1326a82149ae274f18c32d2cb2ccf0e27fe8ca2cd6ac31ca65958b70e80811");
 
-  useEffect(() => {
-    const setRandomSentence = () => {
-      const randomIndex = Math.floor(Math.random() * sentences.length);
-      setSentence(sentences[randomIndex]);
-    };
-    setRandomSentence();
-  }, []);
+  // useEffect(() => {
+  //   const setRandomSentence = () => {
+  //     const randomIndex = Math.floor(Math.random() * sentences.length);
+  //     setSentence(sentences[randomIndex]);
+  //   };
+  //   setRandomSentence();
+  // }, []);
 
 
   const synthesizeSpeech = async () => {
     const myHeaders = new Headers();
     myHeaders.append("Content-Type", "application/json");
 
-    const raw = JSON.stringify({ "text": sentence });
-
     const requestOptions = {
       method: "POST",
       headers: myHeaders,
-      body: raw,
       redirect: "follow"
     };
 
     try {
-      const response = await fetch("http://viseme-server.vercel.app/viseme", requestOptions);
+      const response = await fetch(`http://viseme-server.vercel.app/viseme?inputText=${sentence}`, requestOptions);
       const result = await response.json();
       setVisemeMap(result)
       
@@ -294,6 +290,7 @@ const styles = StyleSheet.create({
     height: 150,
     borderRadius: 40,
     marginTop: 150,
+    top: -100,
     backgroundColor: '#FF6600',
     justifyContent: 'center',
     shadowColor: '#FF6600',
@@ -326,4 +323,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default App;
+export default Speech;

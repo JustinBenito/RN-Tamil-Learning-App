@@ -6,11 +6,12 @@ import { useNavigation } from '@react-navigation/native';
 const wordsStartData = require('./wordsStart.json');
 const wordsMiddleData = require('./wordsMid.json');
 const wordsEndData = require('./wordsEnd.json');
+const wordsData = require('./words.json');
 
 function WordsScreen({ data }) {
   const navigation = useNavigation();
   const handlePress = (item) => {
-    navigation.navigate('SpeechAvatar');
+    navigation.navigate('Speech', item);
   };
 
   const renderItem = ({ item }) => (
@@ -41,8 +42,8 @@ export default function Words() {
   };
 
   const tabIndicatorTranslateX = animation.interpolate({
-    inputRange: [0, 1, 2],
-    outputRange: [0, Dimensions.get('window').width / 3, (Dimensions.get('window').width / 3) * 1.7],
+    inputRange: [0, 1, 2, 3],
+    outputRange: [0, Dimensions.get('window').width / 4, (Dimensions.get('window').width / 4) * 1.7, (Dimensions.get('window').width / 4) * 2.61],
   });
 
   const handleTabChange = (tab) => {
@@ -51,6 +52,7 @@ export default function Words() {
       if (tab === 'start') tabIndex = 0;
       else if (tab === 'middle') tabIndex = 1;
       else if (tab === 'end') tabIndex = 2;
+      else if (tab === 'dental') tabIndex = 3;
 
       setSelectedTab(tab);
       animateTabChange(tabIndex);
@@ -66,21 +68,28 @@ export default function Words() {
           style={[styles.tabButton, selectedTab === 'start' && styles.activeTab]}
           onPress={() => handleTabChange('start')}
         >
-          <Text style={styles.tabText}>Start</Text>
+          <Text style={styles.tabText}>Bilabial</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.tabButton, selectedTab === 'middle' && styles.activeTab]}
           onPress={() => handleTabChange('middle')}
         >
-          <Text style={styles.tabText}>Middle</Text>
+          <Text style={styles.tabText}>Palatal</Text>
         </TouchableOpacity>
 
         <TouchableOpacity
           style={[styles.tabButton, selectedTab === 'end' && styles.activeTab]}
           onPress={() => handleTabChange('end')}
         >
-          <Text style={styles.tabText}>End</Text>
+          <Text style={styles.tabText}>Velar</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+          style={[styles.tabButton, selectedTab === 'dental' && styles.activeTab]}
+          onPress={() => handleTabChange('dental')}
+        >
+          <Text style={styles.tabText}>Dental</Text>
         </TouchableOpacity>
         
         <Animated.View
@@ -94,6 +103,7 @@ export default function Words() {
         {selectedTab === 'start' && <WordsScreen data={wordsStartData} />}
         {selectedTab === 'middle' && <WordsScreen data={wordsMiddleData} />}
         {selectedTab === 'end' && <WordsScreen data={wordsEndData} />}
+        {selectedTab === 'dental' && <WordsScreen data={wordsData} />}
       </View>
     </SafeAreaView>
   );
@@ -139,7 +149,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 3,
     backgroundColor: 'orange',
-    width: Dimensions.get('window').width / 3,
+    width: Dimensions.get('window').width / 4,
   },
   tabContent: {
     flex: 1,

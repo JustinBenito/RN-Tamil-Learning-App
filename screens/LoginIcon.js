@@ -23,7 +23,7 @@ const LoginIcon = () => {
     if(email!=='' && password!==''){
        signInWithEmailAndPassword(auth, email, password)
        .then(()=>{
-        navigation.navigate("BottomTabsRoot", { screen: "PatientHome" })
+        navigation.navigate("Home")
        })
     }
   }
@@ -86,7 +86,7 @@ const LoginIcon = () => {
             activeOpacity={0.2}
             onPress={() =>
               onHandleLogin()
-              // navigation.navigate("BottomTabsRoot", { screen: "PatientHome" })
+              
             }
           >
             <Text style={[styles.login1, styles.textTypo]}>Login</Text>
@@ -104,20 +104,7 @@ const LoginIcon = () => {
             </Pressable>
           </View>
         </View>
-        <View style={[styles.doctor, styles.buttonFlexBox]}>
-          <Text style={[styles.areYouA, styles.areYouATypo]}>
-            Are you a Doctor
-          </Text>
-          <TouchableOpacity
-            style={styles.signUpHereContainer}
-            activeOpacity={0.2}
-            onPress={() => navigation.navigate("DocLogin")}
-          >
-            <Text style={[styles.signinHere1, styles.textTypo]}>
-              Signin here
-            </Text>
-          </TouchableOpacity>
-        </View>
+        
       </View>
     </ImageBackground>
   );

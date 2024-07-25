@@ -54,7 +54,6 @@ const App = () => {
             initialRouteName="Splash"
             screenOptions={{ headerShown: false }}
           >
-            {/* <Stack.Screen name="BottomTabsRoot" component={BottomTabsRoot} /> */}
             <Stack.Screen
               name="SignUp"
               component={SignUpIcon}
@@ -62,46 +61,13 @@ const App = () => {
             />
             <Stack.Screen name="Splash" component={Splash} options={{ headerShown: false }} />
             <Stack.Screen name="Home" component={Home} options={{ headerShown: false }} />
-            {/* <Stack.Screen
-              name="DoctorsCalendar"
-              component={DoctorsCalendar}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="DoctorsProfile"
-              component={DoctorsProfile}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="DocCalendar"
-              component={DocCalendar}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="DocHome"
-              component={DocHome}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="DocLogin"
-              component={DocLoginIcon}
-              options={{ headerShown: false }}
-            /> */}
+            
             <Stack.Screen
               name="Login"
               component={LoginIcon}
               options={{ headerShown: false }}
             />
-            {/* <Stack.Screen
-              name="DocSignupForm"
-              component={DocSignupFormIcon}
-              options={{ headerShown: false }}
-            />
-            <Stack.Screen
-              name="DocSignUp"
-              component={DocSignUpIcon}
-              options={{ headerShown: false }}
-            /> */}
+           
              <Stack.Screen name="HomeScreen" component={HomeScreen} />
              <Stack.Screen name="Speech" component={Speech} options={({ navigation }) => ({
                 headerShown: true,

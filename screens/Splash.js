@@ -13,10 +13,10 @@ export default function Splash({ navigation }) {
         <Text style={styles.title}>Learn Tamil language for free!</Text>
         <Text style={styles.subtitle}>Learn how to pronounce words with ease!</Text>
 
-        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={styles.loginButton} onPress={() => navigation.navigate('Login')}>
           <Text style={styles.loginText}>Login</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('Home')}>
+        <TouchableOpacity style={styles.signUpButton} onPress={() => navigation.navigate('SignUp')}>
           <Text style={styles.signUpText}>Sign Up</Text>
         </TouchableOpacity>
         

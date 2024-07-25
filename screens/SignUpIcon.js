@@ -16,8 +16,8 @@ const SignUpIcon = () => {
     if(email!=='' && password!==''){
 createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
-  console.log('Sigin done');
-  navigation.navigate("BottomTabsRoot", { screen: "PatientHome" });
+  console.log('Signin done');
+  navigation.navigate("Home")
     })
     .catch((error) => {
   const errorCode = error.code;
@@ -36,12 +36,6 @@ createUserWithEmailAndPassword(auth, email, password)
     >
       <View style={styles.login}>
         <SignUpCard email={email} password={password} setEmail={setEmail} setPassword={setPassword}/>
-        <SignUpBottomContainer
-          areYouADoctor="Are you a Doctor"
-          onLoginHerePress={() => navigation.navigate("HomeScreen")}
-          onSigninHerePress={() => navigation.navigate("DocLogin")}
-          onSignup = {()=> onHandleSignin1()}
-        />
       </View>
     </ImageBackground>
   );

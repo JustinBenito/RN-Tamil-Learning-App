@@ -24,6 +24,7 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',
     paddingHorizontal: 20,
     marginVertical: 20,
+
   },
   backButton: {
     color: 'orange',
@@ -36,7 +37,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     flex: 1,
     marginLeft: 12,
-
   },
   rightContainer: {
     width: 50, // Adjust this to match the width of the back button, if necessary
