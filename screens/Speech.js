@@ -58,7 +58,7 @@ setAsrText(sent);
   const [recording, setRecording] = useState(false);
   const [audioUri, setAudioUri] = useState(null);
   const recordingRef = useRef(null);
-  const [token, setToken] = useState("0f1326a82149ae274f18c32d2cb2ccf0e27fe8ca2cd6ac31ca65958b70e80811");
+  const [token, setToken] = useState("75fc631a20038e96407f518fb8ad6aacb82f716ffc4fc72a028903040b652afa");
 
   // useEffect(() => {
   //   const setRandomSentence = () => {
@@ -139,6 +139,34 @@ setAsrText(sent);
         console.log('Recording stopped');
         console.log('Audio URI:', uri);
 
+        // this is for uploading the audio to the IITM ASR API
+
+        // const formData = new FormData();
+        // formData.append('file', {
+        //   uri: uri,
+        //   name: 'audio.m4a', // Use the actual filename if known
+        //   type: 'audio/m4a' // Ensure the MIME type matches the file type
+        // });
+        // try {
+        //   const response = await axios.post('http://10.0.2.2:8000/transcribe', formData, {
+        //         headers: {
+        //           'Content-Type': 'multipart/form-data', 
+        //         },
+        //       });
+        //       console.log('ASR response:', response);
+
+        //       // const res = await axios.get('http://10.0.2.2:8000/', {
+        //       //   headers: {
+        //       //     'content-type': 'application/json',
+        //       //   },
+        //       // });
+        //       // console.log('ASR response:', res.data.message);
+        // }
+        // catch (error) {
+        //   console.log("Nopes:", error.message);
+        // }
+
+
         const formData = new FormData();
         formData.append('file', {
           uri: uri,
@@ -149,9 +177,8 @@ setAsrText(sent);
         formData.append('vtt', 'true');
 
         try {
-          const response = await axios.post('https://asr.iitm.ac.in/api/asr/', formData, {
+          const response = await axios.post('https://asr.iitm.ac.in/internal/asr/decode', formData, {
             headers: {
-              Authorization: `Token ${token}`,
               'Content-Type': 'multipart/form-data',
             },
           });

@@ -1,10 +1,11 @@
 import * as React from "react";
-import { StyleSheet, View, ImageBackground } from "react-native";
+import { StyleSheet, View, ImageBackground, TouchableOpacity, Text, Pressable } from "react-native";
 import { useNavigation } from "@react-navigation/native";
 import SignUpCard from "../components/SignUpCard";
 import SignUpBottomContainer from "../components/SignUpBottomContainer";
 import { Border, Color, Padding } from "../GlobalStyles";
 import{createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword} from 'firebase/auth'
+import {   FontFamily, FontSize } from "../GlobalStyles";
 import { auth } from "../firebase";
 
 const SignUpIcon = () => {
@@ -13,6 +14,7 @@ const SignUpIcon = () => {
   const [email, setEmail] = React.useState('');
   const [password, setPassword] = React.useState('');
   const onHandleSignin1 = () => {
+    console.log("here I am signing in")
     if(email!=='' && password!==''){
 createUserWithEmailAndPassword(auth, email, password)
     .then(() => {
@@ -36,12 +38,54 @@ createUserWithEmailAndPassword(auth, email, password)
     >
       <View style={styles.login}>
         <SignUpCard email={email} password={password} setEmail={setEmail} setPassword={setPassword}/>
+      
+        <View style={styles.bottomSection}>
+          <TouchableOpacity
+            style={[styles.button, styles.buttonFlexBox]}
+            activeOpacity={0.2}
+            onPress={() =>
+              onHandleSignin1()
+              
+            }
+          >
+            <Text style={[styles.login1, styles.textTypo]}>Signup</Text>
+          </TouchableOpacity>
+          <View style={[styles.prompt, styles.buttonFlexBox]}>
+            <Text style={styles.areYouATypo}>Have an account?</Text>
+            <Pressable
+              style={styles.signUpHereContainer}
+              onPress={() => navigation.navigate("Login")}
+            >
+              <Text style={[styles.text, styles.textTypo]}>
+                {``}
+                <Text style={styles.signUpHere}>Login here</Text>
+              </Text>
+            </Pressable>
+          </View>
+        </View>
+
       </View>
+
+      
     </ImageBackground>
   );
 };
 
 const styles = StyleSheet.create({
+  bottomSection: {
+    marginTop: 30,
+    alignSelf: "stretch",
+    alignItems: "center",
+  },
+  buttonFlexBox: {
+    justifyContent: "center",
+    flexDirection: "row",
+    alignItems: "center",
+  },
+  login1: {
+    fontSize: FontSize.size_lg,
+    color: Color.gray50,
+  },
   login: {
     alignSelf: "stretch",
     borderTopLeftRadius: Border.br_41xl,
@@ -59,6 +103,25 @@ const styles = StyleSheet.create({
     paddingVertical: Padding.p_36xl,
     alignItems: "center",
   },
+  signUpHere: {
+    color: Color.orange,
+  },
+  text: {
+    fontSize: FontSize.pixells_size,
+    fontWeight: "500",
+  },
+  signUpHereContainer: {
+    marginLeft: 5,
+  },
+  button: {
+
+    backgroundColor: Color.orange,
+    width: 317,
+    paddingHorizontal: Padding.p_11xl,
+    paddingVertical: Padding.p_lg,
+    borderRadius: Border.br_3xs,
+    justifyContent: "center",
+  },
   signUpIcon: {
     flex: 1,
     width: "100%",
@@ -66,6 +129,7 @@ const styles = StyleSheet.create({
     justifyContent: "flex-end",
     alignItems: "center",
   },
+  
 });
 
 export default SignUpIcon;
